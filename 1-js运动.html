@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js运动</title>
+    <style>
+        #div1 {
+            width: 100px;
+            height: 200px;
+            background: red;
+            position: absolute;
+            left: -100px;
+            top: 100px;
+        }
+
+        #div2 {
+            width: 30px;
+            height: 60px;
+            background: black;
+            position: absolute;
+            right: -30px;
+            top: 70px;
+            color: white;
+            text-align: center;
+        }
+
+        #img1 {
+            opacity: .3;
+            filter: alpha(opacity = 30);
+            margin-left: 200px;
+        }
+
+        #div3 {
+            width: 100px;
+            height: 100px;
+            background: yellow;
+        }
+
+        #div4 {
+            margin-top: 40px;
+            width: 100px;
+            height: 100px;
+            background: green;
+        }
+
+        #div5 {
+            margin-top: 40px;
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            left: 0;
+            background: blue;
+        }
+    </style>
+</head>
+<body>
+<div id="div1">
+    <div id="div2">分享到</div>
+</div>
+<img src="1.jpg" alt="" id="img1">
+<div id="div3"></div>
+<div id="div4"></div>
+<div id="div5"></div>
+<script src="startMove.js"></script>
+<script>
+    window.onload = function(){
+        var oDiv1 = document.getElementById("div1");
+        var oDiv2 = document.getElementById("div2");
+        var oDiv3 = document.getElementById("div3");
+        var oDiv4 = document.getElementById("div4");
+        var oDiv5 = document.getElementById("div5");
+        var oImg = document.getElementById("img1");
+        //点击按钮，让div1横向向右移动
+        //定时器
+        /**
+         * 1、清除定时器，保证运动过程中只有一个定时器在执行
+         * 2、开启定时器
+         * 3、开始运动（同时在运动中加入判断，以便在需要时满足某个要求停止运动）
+         */
+        oDiv1.onmouseover = function() {
+            startMove(this, {left: 0 },{speed: 10});
+        };
+
+        oDiv1.onmouseout = function() {
+            startMove(this, {left: -100 }, {speed: -10});
+        };
+
+        oImg.onmouseover = function() {
+            startMove(this, {opacity: 100}, {speed: 10});
+        };
+
+        oImg.onmouseout = function() {
+            startMove(this,{opacity: 30}, {speed: -10});
+        };
+
+        oDiv3.onclick = function() {
+
+            startMove(this, {
+                width : 200,
+                height: 300
+            }, {speed: 10});
+        };
+
+
+        oDiv4.onclick = function() {
+            startMove(this, {
+                width : 200
+            }, {speed: 10},function(){
+                startMove(this, {
+                    height: 300
+                }, {speed: 10});
+            });
+        };
+
+        oDiv5.onclick = function() {
+            startMove(this, {
+                left: 500
+            }, {way: true, rate: 8});
+        };
+    };
+</script>
+</body>
+</html>
