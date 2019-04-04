@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图片预加载</title>
+</head>
+<body>
+<!--
+在页面刚打开的时候，我们去加载第一张图片，然后页面加载完成以后，在用户看的时间内，去加载后面的内容，
+那么我们必须有个工具（迅雷） -> Image对象
+Image对象：
+     属性：
+     src: 当我们给Image对象的src属性赋值一个url的时候，
+          这个Image对象就去会加载url资源，加载完成以后的资源被保存到了浏览器的缓存文件夹里面，
+          下次如果我们要去调用这个url地址的时候，直接是从缓存文件夹读取到的，所以速度很快。
+     onload: 当资源加载完成的时候触发
+     onerror: 当资源加载失败的时候触发
+-->
+<img src="http://uploads.5068.com/allimg/1805/189-1P51Q05512-50.jpg" alt="" id="img1" style="width: 300px;" >
+
+<script>
+    window.onload = function(){
+        var oImg = document.getElementById("img1");
+        var oImage = new Image();
+        var arr = [
+            'http://b-ssl.duitang.com/uploads/item/201707/13/20170713131248_iwXmh.jpeg',
+            'http://www.agri35.com/UploadFiles/img_0_252185122_1869529836_26.jpg',
+            'http://img2.soyoung.com/user/20180509/5/20180509153950230.jpg',
+            'http://img3.imgtn.bdimg.com/it/u=2864836106,3698982197&fm=26&gp=0.jpg',
+            'http://hbimg.b0.upaiyun.com/02fa62897570f949ad4da5f0468a2c236f52bc7c2e681-IhssAz_fw236',
+            'http://i1.hdslb.com/bfs/archive/e9fa407ef858d37c5e7872e9a7032c786e2afd0f.jpg',
+            'http://img.wowoqq.com/allimg/180821/1-1PR1014440.jpg'
+        ];
+        var curr = 0;
+        var i = 0;
+
+        imageLoader();
+
+        oImg.onclick = function(){
+            i++;
+            if(i < arr.length){
+                oImg.src = arr[i];
+            }else{
+                i = 0;
+            }
+        };
+
+        function imageLoader(){
+            oImage.src = arr[curr];
+            oImage.onload = function(){
+                curr ++;
+                if(curr < arr.length){
+                    imageLoader();//递归
+                }
+            }
+        }
+
+    };
+</script>
+</body>
+</html>

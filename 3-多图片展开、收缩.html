@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>多图片展开、收缩</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        #ul1 {
+            padding: 0;
+            width: 330px;
+            margin: 100px auto;
+            position: relative;
+        }
+
+        #ul2 {
+            padding: 0;
+            width: 330px;
+        }
+
+        li {
+            width: 100px;
+            height: 100px;
+            margin: 10px 0 0 10px;
+            background: red;
+            float: left;
+            list-style: none;
+        }
+
+        #ul2 li {
+            transition: .5s;
+        }
+
+        #ul2 li:hover {
+            background: green;
+            transform: scale(1.5);
+        }
+    </style>
+</head>
+<body>
+<ul id="ul1">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
+<ul id="ul2">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
+<script src="startMove.js"></script>
+<script>
+    /*
+    *
+    * 元素居中放大：除了改变元素宽高以外，还要改变元素定位。如果图片放大一倍，
+    *               那么位移放大的宽高的一半，那么元素必须是定位的
+    * */
+    window.onload = function(){
+        //在转换布局的时候，相对用户眼睛的位置保持不变
+        //offsetLeft[top]
+        var oUl = document.getElementById("ul1");
+        var aLi = oUl.getElementsByTagName("li");
+        var arr = [];
+        var zIndex = 1;
+        for(var i=0;i<aLi.length;i++){
+            //用js设置css样式的时候，在同一个代码块中，
+            // 有些css样式的设置的权限要高于其他的样式
+            arr.push({ left: aLi[i].offsetLeft,top: aLi[i].offsetTop });
+        }
+
+        for(var j=0;j<aLi.length;j++){
+            aLi[j].index = j;
+            aLi[j].style.left = arr[j].left + "px";
+            aLi[j].style.top = arr[j].top + "px";
+            aLi[j].style.position = "absolute";
+            aLi[j].style.margin = "0";
+
+            aLi[j].onmouseover = function(){
+                this.style.background = "green";
+                this.style.zIndex = zIndex++;
+                startMove(this,{
+                    width: 200,
+                    height: 200,
+                    left: arr[this.index].left - 50,
+                    top: arr[this.index].top - 50
+                },{
+                    way: true,
+                    rate: 8
+                });
+            };
+            aLi[j].onmouseout = function() {
+                this.style.background = "red";
+                startMove( this, {
+                    width : 100,
+                    height : 100,
+                    left : arr[this.index].left,
+                    top : arr[this.index].top
+                },{
+                    way: true,
+                    rate: 8
+                });
+            }
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>返回顶部</title>
+    <style>
+        #div1 {
+            width: 100px;
+            height: 100px;
+            background: red;
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+    </style>
+</head>
+<body style="height: 2000px;">
+<div id="div1"></div>
+<script>
+    window.onload = function(){
+        var oDiv = document.getElementById("div1");
+        var timer = null;
+        var b = 0;
+
+        setTop();
+        window.onscroll = function(){
+            if(b != 1){
+                clearInterval(timer);
+            }
+            b = 2;
+            setTop();
+        };
+
+        oDiv.onclick = function(){
+            clearInterval(timer);
+            var curr = speed = 0;
+            timer = setInterval(function(){
+                curr = document.documentElement.scrollTop || document.body.scrollTop;
+                speed = Math.floor((0 - curr) / 8);
+                if(curr == 0){
+                    clearInterval(timer);
+                }else{
+                    document.documentElement.scrollTop = document.body.scrollTop = curr + speed;
+                }
+                b = 1;
+            },30);
+        };
+
+        function setTop(){
+            var scrollTop = document.documentElement.scrollTop || document.body;
+            oDiv.style.top = scrollTop + document.documentElement.clientHeight - oDiv.offsetHeight + "px";
+
+        }
+
+
+    }
+</script>
+</body>
+</html>

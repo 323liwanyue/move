@@ -1,4 +1,7 @@
 /**
+ * Created by Administrator on 2019/4/3.
+ */
+/**
  * 运动函数
  * startMove
  * @param obj 运动对象
@@ -49,19 +52,19 @@ function startMove(obj,json,run,fn){
             fn && fn.call(obj);
         }
     },30);
+}
 
-    /**
-     * 获取对象的属性值
-     * css
-     * @param obj
-     * @param attr
-     * @returns {*}
-     */
-    function css(obj,attr){
-        if(obj.currentStyle){
-            return obj.currentStyle[attr];
-        }else{
-            return getComputedStyle(obj, false)[attr];
-        }
+/**
+ * 获取对象的属性值
+ * css
+ * @param obj
+ * @param attr
+ * @returns {*}
+ */
+function css(obj,attr){
+    if(obj.currentStyle){
+        return obj.currentStyle[attr];
+    }else{
+        return getComputedStyle(obj, false)[attr];
     }
 }
