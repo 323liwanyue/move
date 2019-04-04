@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>弹性运动</title>
+    <style>
+        #div1 {
+            width: 100px;
+            height: 100px;
+            background: red;
+            position: absolute;
+            left: 0;
+        }
+
+        #bg {
+            width: 1px;
+            height: 500px;
+            background: black;
+            position: absolute;
+            left: 500px;
+            top: 0;
+        }
+    </style>
+</head>
+<body>
+<!--
+弹性:
+
+速度 += (目标点 - 当前值)/系数;  //6 , 7 , 8
+速度 *= 摩擦系数;   // 0.7 0.75
+
+缓冲:
+
+var 速度 = (目标点 - 当前值)/系数;
+速度取整
+-->
+<input type="button" value="开始运动" id="input1">
+<div id="div1"></div>
+<div id="bg"></div>
+<script>
+    window.onload = function () {
+        var oInput = document.getElementById('input1');
+        var oDiv = document.getElementById('div1');
+
+        var timer = null;
+        var iSpeed = 0;
+
+        oInput.onclick = function(){
+            startMove();
+        };
+
+        function startMove(){
+            clearInterval(timer);
+            timer = setInterval(function(){
+
+                iSpeed += (500 - oDiv.offsetLeft)/6;
+                iSpeed *= 0.75;
+
+                if( Math.abs(iSpeed)<=1 && Math.abs(500 - oDiv.offsetLeft)<=1 ){
+                    clearInterval(timer);
+                    oDiv.style.left = '500px';
+                    iSpeed = 0;
+                }
+                else{
+                    oDiv.style.left = oDiv.offsetLeft + iSpeed + 'px';
+                }
+
+                document.title = oDiv.style.left + ',' + iSpeed;
+
+            },30);
+        }
+    }
+</script>
+</body>
+</html>

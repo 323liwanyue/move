@@ -33,9 +33,7 @@ Image对象：
         ];
         var curr = 0;
         var i = 0;
-
         imageLoader();
-
         oImg.onclick = function(){
             i++;
             if(i < arr.length){
@@ -44,7 +42,6 @@ Image对象：
                 i = 0;
             }
         };
-
         function imageLoader(){
             oImage.src = arr[curr];
             oImage.onload = function(){
@@ -54,7 +51,6 @@ Image对象：
                 }
             }
         }
-
     };
 </script>
 </body>

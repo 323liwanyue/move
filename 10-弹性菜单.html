@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>弹性菜单</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #ul1 {
+            width: 428px;
+            height: 30px;
+            margin: 20px auto;
+            position: relative;
+        }
+
+        #ul1 li {
+            width: 100px;
+            height: 30px;
+            line-height: 30px;
+            margin-right: 5px;
+            background: red;
+            border: 1px solid #ccc;
+            float: left;
+            list-style: none;
+            text-align: center;
+        }
+
+        #ul1 #mark {
+            position: absolute;
+            left: 0;
+            top: 0;
+            overflow: hidden;
+        }
+
+        #ul1 #mark ul {
+            width: 428px;
+            position: absolute;
+            left: -1px;
+            top: -1px;
+            color: white;
+            background: blue;
+        }
+    </style>
+</head>
+<body>
+<ul id="ul1">
+    <li id="mark">
+        <ul>
+            <li>首页</li>
+            <li>论坛</li>
+            <li>视频</li>
+            <li>留言</li>
+        </ul>
+    </li>
+    <li class="box">首页</li>
+    <li class="box">论坛</li>
+    <li class="box">视频</li>
+    <li class="box">留言</li>
+</ul>
+<script>
+    window.onload = function () {
+        var oMark = document.getElementById("mark");
+        var aBox = document.getElementsByClassName("box");
+        var childUl = oMark.getElementsByTagName('ul')[0];
+
+        var timer = null;
+        var timer2 = null;
+        var speed = 0;
+
+        for (var i = 0; i < aBox.length; i++) {
+            aBox[i].onmouseover = function () {
+                clearTimeout(timer2);
+                startMove(this.offsetLeft);
+            };
+
+            aBox[i].onmouseout = function(){
+                timer2 = setTimeout(function(){
+                    startMove( 0 );
+                },100);
+            };
+        }
+
+        oMark.onmouseover = function(){
+            clearTimeout(timer2);
+        };
+
+        oMark.onmouseout = function(){
+            timer2 = setTimeout(function(){
+                startMove( 0 );
+            },100);
+        };
+
+        function startMove(target) {
+            clearInterval(timer);
+            timer = setInterval(function () {
+                speed += (target - oMark.offsetLeft) / 6;
+                speed *= 0.75;
+
+                if (Math.abs(speed) <= 1 && Math.abs(target - oMark.offsetLeft) <= 1) {
+                    clearInterval(timer);
+                    oMark.style.left = target + "px";
+                    childUl.style.left = -target + 'px';
+                    speed = 0;
+                } else {
+                    oMark.style.left = oMark.offsetLeft + speed + "px";
+                    childUl.style.left = - oMark.offsetLeft + 'px';
+                }
+            },30);
+        }
+    }
+</script>
+</body>
+</html>
