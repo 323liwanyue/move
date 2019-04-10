@@ -36,7 +36,7 @@
     <li>1111111111111111</li>
     <li>1111111111111111</li>
 </ul>
-<script src="startMove.js"></script>
+<script src="move.js"></script>
 <script>
 /*
 * 先写出没有运动的效果，然后把赋值变成运动形式
@@ -52,11 +52,11 @@ window.onload = function(){
         oLi.innerHTML = oContent.value;
         oUl.insertBefore(oLi,oUl.children[0]);
 
-        var height = parseInt(css(oLi,"height"));
+        var height = parseInt(getStyle(oLi,"height"));
         oLi.style.height = "0";
         oLi.style.opacity = "0";
         oLi.style.filter = "alpha(opacity=0)";
-        startMove(oLi,{
+        moveBySpeed(oLi,{
             height: height,
             opacity : 100
         },{

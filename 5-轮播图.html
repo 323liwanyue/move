@@ -71,7 +71,7 @@
         <span></span>
     </p>
 </div>
-<script src="startMove.js"></script>
+<script src="move.js"></script>
 <script>
     window.onload = function(){
         var oDiv = document.getElementById("div1");
@@ -91,7 +91,7 @@
                 }
                 this.className = "current";
                 //oUl.style.left = -this.index * iWidth + "px";
-                startMove(oUl,{
+                moveBySpeed(oUl,{
                     left: -this.index * iWidth
                 },{
                     way: true,

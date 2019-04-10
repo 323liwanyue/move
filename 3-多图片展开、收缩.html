@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>多图片展开、收缩</title>
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
     <style>
         body {
             margin: 0;
@@ -37,6 +41,15 @@
             background: green;
             transform: scale(1.5);
         }
+
+        #div1 {
+            width: 100px;
+            height: 100px;
+            background: red;
+            position: absolute;
+            left: 600px;
+            top: 600px;
+        }
     </style>
 </head>
 <body>
@@ -62,59 +75,78 @@
     <li></li>
     <li></li>
 </ul>
-<script src="startMove.js"></script>
+<div id="div1"></div>
+<script src="move.js"></script>
 <script>
     /*
-    *
-    * 元素居中放大：除了改变元素宽高以外，还要改变元素定位。如果图片放大一倍，
-    *               那么位移放大的宽高的一半，那么元素必须是定位的
-    * */
-    window.onload = function(){
+     *
+     * 元素居中放大：除了改变元素宽高以外，还要改变元素定位。如果图片放大一倍，
+     *               那么位移放大的宽高的一半，那么元素必须是定位的
+     * */
+    window.onload = function () {
         //在转换布局的时候，相对用户眼睛的位置保持不变
         //offsetLeft[top]
         var oUl = document.getElementById("ul1");
         var aLi = oUl.getElementsByTagName("li");
         var arr = [];
         var zIndex = 1;
-        for(var i=0;i<aLi.length;i++){
+        for (var i = 0; i < aLi.length; i++) {
             //用js设置css样式的时候，在同一个代码块中，
             // 有些css样式的设置的权限要高于其他的样式
-            arr.push({ left: aLi[i].offsetLeft,top: aLi[i].offsetTop });
+            arr.push({left: aLi[i].offsetLeft, top: aLi[i].offsetTop});
         }
 
-        for(var j=0;j<aLi.length;j++){
+        for (var j = 0; j < aLi.length; j++) {
             aLi[j].index = j;
             aLi[j].style.left = arr[j].left + "px";
             aLi[j].style.top = arr[j].top + "px";
             aLi[j].style.position = "absolute";
             aLi[j].style.margin = "0";
 
-            aLi[j].onmouseover = function(){
+            aLi[j].onmouseover = function () {
                 this.style.background = "green";
                 this.style.zIndex = zIndex++;
-                startMove(this,{
+                startMove(this, {
                     width: 200,
                     height: 200,
                     left: arr[this.index].left - 50,
                     top: arr[this.index].top - 50
-                },{
+                }, {
                     way: true,
                     rate: 8
                 });
             };
-            aLi[j].onmouseout = function() {
+            aLi[j].onmouseout = function () {
                 this.style.background = "red";
-                startMove( this, {
-                    width : 100,
-                    height : 100,
-                    left : arr[this.index].left,
-                    top : arr[this.index].top
-                },{
+                moveBySpeed(this, {
+                    width: 100,
+                    height: 100,
+                    left: arr[this.index].left,
+                    top: arr[this.index].top
+                }, {
                     way: true,
                     rate: 8
                 });
             }
         }
+
+        var oDiv = document.getElementById("div1");
+        oDiv.onmouseover = function () {
+            $(this).animate({
+                width: 200,
+                height: 200,
+                left: 550,
+                top: 550
+            }, 2000);
+        };
+        oDiv.onmouseout = function () {
+            $(this).animate({
+                width: 100,
+                height: 100,
+                left: 600,
+                top: 600
+            }, 2000);
+        };
     }
 </script>
 </body>
