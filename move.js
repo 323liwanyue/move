@@ -32,7 +32,8 @@ function moveBySpeed(obj, json, run, fn) {
             }
 
             if (run.way) {//缓冲运动、摩擦运动，速度越来越小
-                speed = (target - curr) / run.rate;
+                let rate = run.rate || 8;
+                speed = (target - curr) / rate;
                 speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
             }
 
